@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/marcelo-luizz/gitops-app-infra
     targetRevision: HEAD
-    path: environments/dev/storage/gcs-bucket
+    path: environments/dev
     directory:
       recurse: true
       include: "*.yaml"
