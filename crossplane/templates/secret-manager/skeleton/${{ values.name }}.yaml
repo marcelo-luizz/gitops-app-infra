@@ -1,0 +1,8 @@
+apiVersion: secretmanager.gcp.m.upbound.io/v1beta1
+kind: Secret
+metadata:
+  name: ${{ values.name }}
+  namespace: upbound-system
+spec:
+  forProvider:
+    secretId: ${{ values.name }}
