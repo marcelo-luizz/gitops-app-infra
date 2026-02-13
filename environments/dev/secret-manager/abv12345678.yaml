@@ -33,3 +33,6 @@ spec:
     secretDataSecretRef:
       key: secret12345
       name: secret-version
+  providerConfigRef:
+    kind: ProviderConfig
+    name: default
