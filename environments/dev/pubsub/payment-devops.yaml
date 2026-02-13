@@ -4,7 +4,7 @@ metadata:
   name: payment-devops-topic
   namespace: crossplane-system
 spec:
-  prodviderConfigRef:
+  providerConfigRef:
     kind: ProviderConfig
     name: default
 ---
@@ -29,7 +29,7 @@ metadata:
   name: payment-devops-dlq
   namespace: crossplane-system
 spec:
-  prodviderConfigRef:
+  providerConfigRef:
     kind: ProviderConfig
     name: default
 ---
