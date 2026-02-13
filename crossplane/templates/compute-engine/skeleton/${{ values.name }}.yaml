@@ -4,13 +4,13 @@ metadata:
   name: ${{ values.name }}
 spec:
   forProvider:
-    machineType: ${{ values.machineType }}
-    zone: ${{ values.zone }}
+    machineType: e2-medium
+    zone: us-central1-a
     disks:
       - autoDelete: true
         boot: true
         initializeParams:
-          sourceImage: ${{ values.sourceImage }}
+          sourceImage: projects/debian-cloud/global/images/family/debian-10
     networkInterfaces:
       - network: default
   providerConfigRef:
