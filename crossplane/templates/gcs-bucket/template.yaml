@@ -60,7 +60,6 @@ spec:
         sourcePath: ./infra
         targetPath: environments/${{ parameters.environment }}/storage/gcs-bucket
         # Se quiser que o PR seja criado mesmo se a pasta não existir
-        force: true
 
   output:
     links:
