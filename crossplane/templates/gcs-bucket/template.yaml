@@ -40,7 +40,7 @@ spec:
       input:
         # Apontamos para a PASTA, não para o arquivo direto.
         # O Backstage assume que o caminho é relativo ao local deste template.
-        url: ./ 
+        url: ./skeleton
         values:
           name: ${{ parameters.bucketname }}
           environment: ${{ parameters.environment }}
@@ -59,7 +59,7 @@ spec:
         # Pegamos o arquivo renderizado na pasta temporária
         sourcePath: ./infra-temp
         # E jogamos para a pasta de destino final no GitOps
-        targetPath: environments/${{ parameters.environment }}/storage/gcs-bucket
+        targetPath: environments/${{ parameters.environment }}/storage/gcs-bucket/
 
   output:
     links:
