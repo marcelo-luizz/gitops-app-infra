@@ -1,0 +1,17 @@
+apiVersion: compute.gcp.m.upbound.io/v1beta1
+kind: Instance
+metadata:
+  name: 
+spec:
+  forProvider:
+    machineType: e2-medium
+    zone: us-central1-a
+    disks:
+      - autoDelete: true
+        boot: true
+        initializeParams:
+          sourceImage: projects/debian-cloud/global/images/family/debian-10
+    networkInterfaces:
+      - network: default
+  providerConfigRef:
+    name: default
