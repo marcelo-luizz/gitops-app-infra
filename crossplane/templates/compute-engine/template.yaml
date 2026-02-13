@@ -11,10 +11,10 @@ spec:
   parameters:
     - title: Dados da Máquina
       required:
-        - instance-name
+        - instanceName
         - environment
       properties:
-        instance-name:
+        instanceName:
           title: Instance Name
           type: string
           description: Nome único da instância Compute Engine.
@@ -42,7 +42,7 @@ spec:
         # O Backstage assume que o caminho é relativo ao local deste template.
         url: ./skeleton
         values:
-          name: ${{ parameters.instance-name }}
+          name: ${{ parameters.instanceName }}
           environment: ${{ parameters.environment }}
           team: ${{ parameters.team }}
         targetPath: ./infra-temp
@@ -53,8 +53,8 @@ spec:
       action: publish:github:pull-request
       input:
         repoUrl: github.com?repo=gitops-app-infra&owner=marcelo-luizz
-        branchName: create-instance-${{ parameters.instance-name }}
-        title: "feat(compute): add instance ${{ parameters.instance-name }} in ${{ parameters.environment }}"
+        branchName: create-instance-${{ parameters.instanceName }}
+        title: "feat(compute): add instance ${{ parameters.instanceName }} in ${{ parameters.environment }}"
         description: "Este PR foi gerado via Backstage."
         # Pegamos o arquivo renderizado na pasta temporária
         sourcePath: ./infra-temp
