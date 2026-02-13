@@ -10,7 +10,7 @@ spec:
     displayName: a beautiful service account
   providerConfigRef:
     kind: ProviderConfig
-    name: default
+    name: defaults
 ---
 apiVersion: iam.gcp.crossplane.io/v1alpha1
 kind: ServiceAccountPolicy
@@ -28,4 +28,4 @@ spec:
       name: devopslabs-test-sa
   providerConfigRef:
     kind: ProviderConfig
-    name: default
+    name: defaults
