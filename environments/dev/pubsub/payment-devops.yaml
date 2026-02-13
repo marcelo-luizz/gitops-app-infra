@@ -4,8 +4,8 @@ metadata:
   name: payment-devops-topic
   namespace: crossplane-system
 spec:
-  # CORRIGIDO: Removido o 'd' de prodvider
   providerConfigRef:
+    kind: ProviderConfig
     name: default
 ---
 apiVersion: pubsub.gcp.m.upbound.io/v1beta1
@@ -15,13 +15,12 @@ metadata:
   namespace: crossplane-system
 spec:
   forProvider:
-    # No Crossplane, é boa prática referenciar o tópico assim 
-    # ou garantir que o nome bate exatamente com o metadata.name acima
     topic: payment-devops-topic
     deadLetterPolicy:
       deadLetterTopic: payment-devops-dlq
       maxDeliveryAttempts: 5
   providerConfigRef:
+    kind: ProviderConfig
     name: default
 ---
 apiVersion: pubsub.gcp.m.upbound.io/v1beta1
@@ -30,8 +29,8 @@ metadata:
   name: payment-devops-dlq
   namespace: crossplane-system
 spec:
-  # CORRIGIDO: providerConfigRef
   providerConfigRef:
+    kind: ProviderConfig
     name: default
 ---
 apiVersion: pubsub.gcp.m.upbound.io/v1beta1
@@ -43,4 +42,5 @@ spec:
   forProvider:
     topic: payment-devops-dlq
   providerConfigRef:
+    kind: ProviderConfig
     name: default
