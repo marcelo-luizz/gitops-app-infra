@@ -15,3 +15,6 @@ spec:
       userManaged:
         replicas:
           - location: us-west2
+  providerConfigRef:
+    kind: ProviderConfig
+    name: default        
