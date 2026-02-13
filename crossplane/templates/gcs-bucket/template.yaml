@@ -60,7 +60,6 @@ spec:
         sourcePath: ./infra-temp
         # E jogamos para a pasta de destino final no GitOps
         targetPath: environments/${{ parameters.environment }}/storage/gcs-bucket
-        force: true
 
   output:
     links:
