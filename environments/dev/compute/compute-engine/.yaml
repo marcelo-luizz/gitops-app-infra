@@ -1,0 +1,17 @@
+apiVersion: compute.gcp.m.upbound.io/v1beta1
+kind: Instance
+metadata:
+  name: {{ values.name }}
+spec:
+  forProvider:
+    machineType: {{ values.machineType }}
+    zone: {{ values.zone }}
+    disks:
+      - autoDelete: true
+        boot: true
+        initializeParams:
+          sourceImage: {{ values.sourceImage }}
+    networkInterfaces:
+      - network: default
+  providerConfigRef:
+    name: default
