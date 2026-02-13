@@ -38,7 +38,7 @@ spec:
       action: fetch:template
       input:
         # Puxa do próprio repositório onde o template está registrado
-        url: ./crossplane/templates/gcs-bucket 
+        url: ./crossplane/templates/gcs-bucket/gcs-bucket-template.yaml 
         values:
           name: ${{ parameters.bucketname }}
           environment: ${{ parameters.environment }}
