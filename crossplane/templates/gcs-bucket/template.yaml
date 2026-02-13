@@ -1,77 +1,68 @@
-apiVersion: backstage.io/v1beta3
+apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: api-express-template
-  title: Node.js API w/ Express.js
-  description: A template for provisioning Express.js APIs with built-in CI/CD and code quality tools
+  name: gcs-bucket
+  title: Create GCS Bucket via Crossplane
+  description: Gera um manifesto Crossplane e abre um PR no repositório de GitOps.
 spec:
-  owner: user:guest
+  owner: team-platform
   type: service
 
   parameters:
-    - title: Project Info
+    - title: Dados do Bucket
       required:
-        - name
-        - owner
+        - bucketname
+        - environment
       properties:
-        name:
-          title: Name
+        bucketname:
+          title: Bucket Name
           type: string
-          description: Unique component name
-          ui:
-            autofocus: true
-        owner:
-          title: Owner
+          description: Nome único do bucket GCS.
+        environment:
+          title: Environment
           type: string
-          description: Component owner
-          ui:
-            field: OwnerPicker
-            options:
-              catalogFilter:
-                kind: [User, Group]
-
-    - title: Choose Location
-      required:
-        - repoUrl
-      properties:
-        repoUrl:
-          title: Repository Location
+          enum:
+            - dev
+            - homolog
+            - prod
+          default: dev
+        team:
+          title: Team
           type: string
-          ui:
-            field: RepoUrlPicker
-            options:
-              allowedHosts:
-                - github.com
+          enum: [team-a, team-b, team-c]
 
   steps:
-    - id: fetch-base
-      name: Fetch Base
+    # 1. Busca o template que está na pasta crossplane/templates/gcs-bucket
+    - id: fetch-template
+      name: Fetch Crossplane Template
       action: fetch:template
       input:
-        url: https://github.com/Sanjeev-Thiyagarajan/backstage-express-api-blueprint
+        # Puxa do próprio repositório onde o template está registrado
+        url: ./crossplane/templates/gcs-bucket 
         values:
-          name: ${{ parameters.name }}
-          owner: ${{ parameters.owner }}
+          name: ${{ parameters.bucketname }}
+          environment: ${{ parameters.environment }}
+          team: ${{ parameters.team }}
+        # O targetPath define onde os arquivos renderizados ficarão temporariamente no workspace do Backstage
+        targetPath: ./infra
 
-    - id: publish
-      name: Publish to GitHub
-      action: publish:github
+    # 2. Abre o Pull Request no repositório de infra
+    - id: create-pr
+      name: Create Pull Request
+      action: publish:github:pull-request
       input:
-        allowedHosts: ['github.com']
-        description: Project ${{ parameters.name }}
-        repoUrl: ${{ parameters.repoUrl }}
-
-    - id: register
-      name: Register Component
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
-        catalogInfoPath: /catalog-info.yaml
+        # Ajuste para a URL do seu repositório
+        repoUrl: github.com?repo=gitops-app-infra&owner=marcelo-luizz
+        branchName: create-bucket-${{ parameters.bucketname }}
+        title: "feat(gcs): add bucket ${{ parameters.bucketname }} in ${{ parameters.environment }}"
+        description: "Este PR foi gerado via Backstage para criar um novo bucket GCS usando Crossplane."
+        # Aqui acontece a mágica: movemos o arquivo da pasta temporária para a pasta final do GitOps
+        sourcePath: ./infra
+        targetPath: environments/${{ parameters.environment }}/storage/gcs-bucket
+        # Se quiser que o PR seja criado mesmo se a pasta não existir
+        force: true
 
   output:
     links:
-      - title: Repository
-        url: ${{ steps.publish.output.remoteUrl }}
-      - title: Open in Catalog
-        icon: catalog
-        entityRef: ${{ steps.register.output.entityRef }}
+      - title: Acompanhar Pull Request
+        url: ${{ steps['create-pr'].output.remoteUrl }}
