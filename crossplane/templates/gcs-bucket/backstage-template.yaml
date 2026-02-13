@@ -5,7 +5,7 @@ metadata:
   title: Create GCS Bucket via Crossplane
   description: Gera um manifesto Crossplane e abre um PR no repositório de GitOps.
 spec:
-  owner: team-platform
+  owner: user:guest
   type: service
 
   parameters:
