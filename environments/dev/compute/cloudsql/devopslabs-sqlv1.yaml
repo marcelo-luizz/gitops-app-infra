@@ -1,15 +1,15 @@
-apiVersion: database.gcp.crossplane.io/v1beta1
-kind: CloudSQLInstance
+apiVersion: sql.gcp.m.upbound.io/v1beta1
+kind: DatabaseInstance
 metadata:
-  name: devopslabs-sqlv1
+  name: example-instance-random
+  namespace: crossplane-system
 spec:
   forProvider:
     databaseVersion: MYSQL_5_7
+    deletionProtection: false
     region: us-central1
     settings:
-      tier: db-n1-standard-1
-      dataDiskType: PD_SSD
-      ipConfiguration:
-        ipv4Enabled: true
-  providerConfigRef:
-    name: default
+      diskSize: 20
+      tier: db-f1-micro
+  writeConnectionSecretToRef:
+    name: example-sql-db-instance-secret
