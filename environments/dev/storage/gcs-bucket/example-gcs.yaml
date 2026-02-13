@@ -1,11 +1,11 @@
-apiVersion: storage.gcp.m.upbound.io/v1beta1
-kind: Bucket
-metadata:
-  name: bucket-object-random
-  namespace: crossplane-system
-spec:
-  forProvider:
-    location: US
-  providerConfigRef:
-    kind: ProviderConfig
-    name: default
+# apiVersion: storage.gcp.m.upbound.io/v1beta1
+# kind: Bucket
+# metadata:
+#   name: bucket-object-random
+#   namespace: crossplane-system
+# spec:
+#   forProvider:
+#     location: US
+#   providerConfigRef:
+#     kind: ProviderConfig
+#     name: default
