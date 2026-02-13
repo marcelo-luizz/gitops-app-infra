@@ -17,4 +17,19 @@ spec:
           - location: us-west2
   providerConfigRef:
     kind: ProviderConfig
-    name: default        
+    name: default
+---
+apiVersion: secretmanager.gcp.m.upbound.io/v1beta1
+kind: SecretVersion
+metadata:
+  annotations:
+    meta.upbound.io/example-id: secretmanager/v1beta1/secretversion
+  labels:
+    testing.upbound.io/example-name: secret-version
+  name: secret-version
+  namespace: upbound-system
+spec:
+  forProvider:
+    secretDataSecretRef:
+      key: secret12345
+      name: secret-version
