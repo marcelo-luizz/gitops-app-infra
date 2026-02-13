@@ -1,8 +1,17 @@
 apiVersion: secretmanager.gcp.m.upbound.io/v1beta1
 kind: Secret
 metadata:
-  name: abv12345678
-  namespace: upbound-system
+  annotations:
+    meta.upbound.io/example-id: secretmanager/v1beta1/secret
+  labels:
+    testing.upbound.io/example-name: secret
+  name: secret
+  namespace: crossplane-system
 spec:
   forProvider:
-    secretId: abv12345678
+    labels:
+      environment: dev
+    replication:
+      userManaged:
+        replicas:
+          - location: us-west2
