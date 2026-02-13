@@ -42,7 +42,7 @@ spec:
         # O Backstage assume que o caminho é relativo ao local deste template.
         url: ./skeleton
         values:
-          name: ${{ parameters.bucketname }}
+          name: ${{ parameters.instance-name }}
           environment: ${{ parameters.environment }}
           team: ${{ parameters.team }}
         targetPath: ./infra-temp
