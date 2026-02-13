@@ -11,5 +11,8 @@ spec:
     settings:
       diskSize: 20
       tier: db-f1-micro
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
   writeConnectionSecretToRef:
     name: ${{ values.name }}-sql-db-instance-secret
