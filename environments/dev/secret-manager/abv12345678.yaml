@@ -1,0 +1,8 @@
+apiVersion: secretmanager.gcp.m.upbound.io/v1beta1
+kind: Secret
+metadata:
+  name: abv12345678
+  namespace: upbound-system
+spec:
+  forProvider:
+    secretId: abv12345678
