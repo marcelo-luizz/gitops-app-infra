@@ -32,34 +32,35 @@ spec:
           enum: [team-a, team-b, team-c]
 
   steps:
-    # 1. Busca o template que está na pasta crossplane/templates/gcs-bucket
+    # 1. Busca a PASTA de templates. 
+    # Ele vai processar todos os arquivos lá dentro (incluindo o que renomeamos para {{name}}.yaml)
     - id: fetch-template
       name: Fetch Crossplane Template
       action: fetch:template
       input:
-        # Puxa do próprio repositório onde o template está registrado
-        url: ./crossplane/templates/gcs-bucket/gcs-bucket-template.yaml 
+        # Apontamos para a PASTA, não para o arquivo direto.
+        # O Backstage assume que o caminho é relativo ao local deste template.
+        url: ./ 
         values:
           name: ${{ parameters.bucketname }}
           environment: ${{ parameters.environment }}
           team: ${{ parameters.team }}
-        # O targetPath define onde os arquivos renderizados ficarão temporariamente no workspace do Backstage
-        targetPath: ./infra
+        targetPath: ./infra-temp
 
-    # 2. Abre o Pull Request no repositório de infra
+    # 2. Abre o Pull Request
     - id: create-pr
       name: Create Pull Request
       action: publish:github:pull-request
       input:
-        # Ajuste para a URL do seu repositório
         repoUrl: github.com?repo=gitops-app-infra&owner=marcelo-luizz
         branchName: create-bucket-${{ parameters.bucketname }}
         title: "feat(gcs): add bucket ${{ parameters.bucketname }} in ${{ parameters.environment }}"
-        description: "Este PR foi gerado via Backstage para criar um novo bucket GCS usando Crossplane."
-        # Aqui acontece a mágica: movemos o arquivo da pasta temporária para a pasta final do GitOps
-        sourcePath: ./infra
+        description: "Este PR foi gerado via Backstage."
+        # Pegamos o arquivo renderizado na pasta temporária
+        sourcePath: ./infra-temp
+        # E jogamos para a pasta de destino final no GitOps
         targetPath: environments/${{ parameters.environment }}/storage/gcs-bucket
-        # Se quiser que o PR seja criado mesmo se a pasta não existir
+        force: true
 
   output:
     links:
