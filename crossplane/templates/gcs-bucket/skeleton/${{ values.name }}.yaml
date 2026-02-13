@@ -1,7 +1,7 @@
 apiVersion: storage.gcp.m.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: {{ values.name }}
+  name: ${{ values.name }}
   namespace: crossplane-system
 spec:
   forProvider:
