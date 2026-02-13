@@ -2,6 +2,7 @@ apiVersion: compute.gcp.m.upbound.io/v1beta1
 kind: Instance
 metadata:
   name: devopslabs-computev1
+  namespace: crossplane-system
 spec:
   forProvider:
     machineType: e2-medium
