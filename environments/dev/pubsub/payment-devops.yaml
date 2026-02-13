@@ -18,7 +18,8 @@ spec:
   forProvider:
     topic: payment-devops-topic
     deadLetterPolicy:
-      deadLetterTopic: payment-devops-dlq
+      deadLetterTopicRef:
+        name: payment-devops-dlq
       maxDeliveryAttempts: 5
   providerConfigRef:
     kind: ProviderConfig
