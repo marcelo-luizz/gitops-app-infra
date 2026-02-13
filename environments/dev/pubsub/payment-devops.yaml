@@ -19,6 +19,9 @@ spec:
     deadLetterPolicy:
       deadLetterTopic: payment-devops-dlq
       maxDeliveryAttempts: 5
+  providerConfigRef:
+    kind: ProviderConfig
+    name: default
 ---
 apiVersion: pubsub.gcp.m.upbound.io/v1beta1
 kind: Topic
@@ -38,3 +41,6 @@ metadata:
 spec:
   forProvider:
     topic: payment-devops-dlq
+  providerConfigRef:
+    kind: ProviderConfig
+    name: default
