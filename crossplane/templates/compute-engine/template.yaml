@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: compute-engine
+  name: compute-engine-v1
   title: Create Compute Engine via Crossplane
   description: Gera um manifesto Crossplane e abre um PR no repositório de GitOps.
 spec:
