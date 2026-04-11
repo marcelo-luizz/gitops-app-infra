@@ -1,55 +1,55 @@
-# =============================================================================
-# ApplicationSet: app-teams-environments
-# Gera 1 Application por TIME por ENVIRONMENT
-# Ex: app-default-homolog, app-default-stage, app-platform-homolog, etc.
-# Cada Application contém todas as categorias de recursos (compute-engine, pubsub, etc)
-# Estrutura: environments/{environment}/teams/{team-name}/**
-# =============================================================================
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: app-teams-environments
-  namespace: argocd
-spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
-  generators:
-    - git:
-        repoURL: "https://github.com/marcelo-luizz/gitops-app-infra.git"
-        revision: HEAD
-        directories:
-          - path: "environments/*/teams/*"
-  template:
-    metadata:
-      name: "app-{{index .path.segments 3}}-{{index .path.segments 1}}"
-      namespace: argocd
-      labels:
-        repo: app-infra
-        team: "{{index .path.segments 3}}"
-        environment: "{{index .path.segments 1}}"
-      finalizers:
-        - resources-finalizer.argocd.argoproj.io
-    spec:
-      project: default
-      source:
-        repoURL: "https://github.com/marcelo-luizz/gitops-app-infra.git"
-        targetRevision: HEAD
-        path: "{{.path.path}}"
-        directory:
-          recurse: true
-          include: "*.yaml"
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: crossplane-system
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - ServerSideApply=true
-        retry:
-          limit: 3
-          backoff:
-            duration: 5s
-            factor: 2
-            maxDuration: 1m
+# # =============================================================================
+# # ApplicationSet: app-teams-environments
+# # Gera 1 Application por TIME por ENVIRONMENT
+# # Ex: app-default-homolog, app-default-stage, app-platform-homolog, etc.
+# # Cada Application contém todas as categorias de recursos (compute-engine, pubsub, etc)
+# # Estrutura: environments/{environment}/teams/{team-name}/**
+# # =============================================================================
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: app-teams-environments
+#   namespace: argocd
+# spec:
+#   goTemplate: true
+#   goTemplateOptions: ["missingkey=error"]
+#   generators:
+#     - git:
+#         repoURL: "https://github.com/marcelo-luizz/gitops-app-infra.git"
+#         revision: HEAD
+#         directories:
+#           - path: "environments/*/teams/*"
+#   template:
+#     metadata:
+#       name: "app-{{index .path.segments 3}}-{{index .path.segments 1}}"
+#       namespace: argocd
+#       labels:
+#         repo: app-infra
+#         team: "{{index .path.segments 3}}"
+#         environment: "{{index .path.segments 1}}"
+#       finalizers:
+#         - resources-finalizer.argocd.argoproj.io
+#     spec:
+#       project: default
+#       source:
+#         repoURL: "https://github.com/marcelo-luizz/gitops-app-infra.git"
+#         targetRevision: HEAD
+#         path: "{{.path.path}}"
+#         directory:
+#           recurse: true
+#           include: "*.yaml"
+#       destination:
+#         server: https://kubernetes.default.svc
+#         namespace: crossplane-system
+#       syncPolicy:
+#         automated:
+#           prune: true
+#           selfHeal: true
+#         syncOptions:
+#           - ServerSideApply=true
+#         retry:
+#           limit: 3
+#           backoff:
+#             duration: 5s
+#             factor: 2
+#             maxDuration: 1m
