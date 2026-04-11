@@ -5,6 +5,7 @@ metadata:
   labels:
     example: 'true'
   name: devopslabs-bucket1234567
+  namespace: crossplane-system
 spec:
   deletionPolicy: Delete
   location: US
