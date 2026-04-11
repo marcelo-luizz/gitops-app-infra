@@ -1,0 +1,18 @@
+apiVersion: composer.gcp.m.upbound.io/v1beta1
+kind: Environment
+metadata:
+  annotations:
+  labels:
+    testing.upbound.io/example-name: composer-environment
+  name: composer-devopslabs
+  namespace: crossplane-system
+spec:
+  forProvider:
+    region: southamerica-east1
+    config:
+      nodeCount: 2
+      softwareConfig:
+        imageVersion: composer-2.0.0-airflow-2.2.5
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
