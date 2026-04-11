@@ -10,7 +10,7 @@ spec:
     region: southamerica-east1
     config:
       nodeConfig:
-        - serviceAccount: "509332012213-compute@developer.gserviceaccount.com"
+        serviceAccount: "509332012213-compute@developer.gserviceaccount.com"
       softwareConfig:
         imageVersion: composer-2.16.10-airflow-2.11.1
       environmentSize: ENVIRONMENT_SIZE_SMALL
