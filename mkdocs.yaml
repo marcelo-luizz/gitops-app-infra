@@ -1,0 +1,9 @@
+site_name: gitops-app-infra
+site_description: "Application Infrastructure GitOps — Buckets, PubSub, SAs"
+repo_url: https://github.com/jeitto/gitops-app-infra
+edit_uri: edit/main/docs
+plugins:
+  - techdocs-core
+nav:
+  - Overview:
+      - Getting started: "index.md"

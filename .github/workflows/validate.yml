@@ -1,0 +1,117 @@
+name: Validate App Infra
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'environments/**'
+      - 'argocd/**'
+
+jobs:
+  validate-yaml:
+    name: Validate YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install yamllint
+        run: pip install yamllint
+
+      - name: Lint YAML files
+        run: yamllint -c .yamllint.yml .
+
+  validate-claims:
+    name: Validate Claims
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check required labels
+        run: |
+          echo "=== Verificando labels obrigatórias nos Claims ==="
+          errors=0
+          for f in $(find environments -name "*.yaml" -type f); do
+            # Verificar label 'team'
+            if ! grep -q "team:" "$f"; then
+              echo "❌ $f: faltando label 'team'"
+              errors=$((errors + 1))
+            fi
+            # Verificar label 'environment'
+            if ! grep -q "environment:" "$f"; then
+              echo "❌ $f: faltando label 'environment'"
+              errors=$((errors + 1))
+            fi
+            # Verificar label 'managed-by'
+            if ! grep -q "managed-by:" "$f"; then
+              echo "❌ $f: faltando label 'managed-by'"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo ""
+            echo "❌ $errors erros encontrados!"
+            exit 1
+          fi
+          echo "✅ Todos os Claims possuem labels obrigatórias"
+
+      - name: Validate API group
+        run: |
+          echo "=== Verificando apiVersion dos Claims ==="
+          errors=0
+          for f in $(find environments -name "*.yaml" -type f); do
+            if ! grep -q "apiVersion: jeitto.io/v1alpha1" "$f"; then
+              echo "❌ $f: apiVersion incorreto (deve ser jeitto.io/v1alpha1)"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo ""
+            echo "❌ $errors erros encontrados!"
+            exit 1
+          fi
+          echo "✅ Todos os Claims usam jeitto.io/v1alpha1"
+
+      - name: Validate Claim kinds
+        run: |
+          echo "=== Verificando kinds permitidos ==="
+          allowed="BucketClaim|PubSubClaim|ServiceAccountClaim"
+          errors=0
+          for f in $(find environments -name "*.yaml" -type f); do
+            kind=$(grep "^kind:" "$f" | awk '{print $2}')
+            if ! echo "$kind" | grep -qE "^($allowed)$"; then
+              echo "❌ $f: kind '$kind' não permitido (permitidos: $allowed)"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo ""
+            echo "❌ $errors erros encontrados!"
+            exit 1
+          fi
+          echo "✅ Todos os Claims usam kinds permitidos"
+
+  detect-team-resources:
+    name: Report Team Resources
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Count resources per team/environment
+        run: |
+          echo "=== Recursos por time e ambiente ==="
+          for env in integration pre-prod prod; do
+            echo ""
+            echo "--- $env ---"
+            teams_dir="environments/$env/teams"
+            if [ -d "$teams_dir" ]; then
+              for team_dir in "$teams_dir"/*/; do
+                if [ -d "$team_dir" ]; then
+                  team=$(basename "$team_dir")
+                  count=$(find "$team_dir" -name "*.yaml" | wc -l)
+                  echo "  $team: $count recurso(s)"
+                fi
+              done
+            else
+              echo "  (nenhum time)"
+            fi
+          done

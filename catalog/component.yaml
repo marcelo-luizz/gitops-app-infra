@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: gitops-app-infra
+  description: |
+    Repositório GitOps para infraestrutura de aplicações (Buckets, PubSub, SAs).
+    Self-service para times de produto via Backstage.
+  annotations:
+    github.com/project-slug: jeitto/gitops-app-infra
+    backstage.io/techdocs-ref: dir:../
+  links:
+    - url: https://github.com/jeitto/gitops-app-infra
+      title: Repository
+      icon: github
+    - url: https://argocd.jeitto.io/applications?proj=app-infra
+      title: ArgoCD Dashboard
+      icon: dashboard
+spec:
+  type: gitops
+  lifecycle: production
+  owner: platform-engineering
+  system: internal-developer-platform
