@@ -1,12 +1,14 @@
 # =============================================================================
-# ApplicationSet: app-environments
-# Gera 1 Application por TEAM por ENVIRONMENT
-# Ex: payments-integration, payments-prod, notifications-integration, etc.
+# ApplicationSet: app-teams-environments
+# Gera 1 Application por TIME por ENVIRONMENT
+# Ex: app-default-homolog, app-default-stage, app-platform-homolog, etc.
+# Cada Application contém todas as categorias de recursos (compute-engine, pubsub, etc)
+# Estrutura: environments/{environment}/teams/{team-name}/**
 # =============================================================================
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: app-environments
+  name: app-teams-environments
   namespace: argocd
 spec:
   goTemplate: true
@@ -16,14 +18,14 @@ spec:
         repoURL: "https://github.com/marcelo-luizz/gitops-app-infra.git"
         revision: HEAD
         directories:
-          - path: "environments/*"
+          - path: "environments/*/teams/*"
   template:
     metadata:
-      name: "app-{{index .path.segments 1}}-{{index .path.segments 0}}"
+      name: "app-{{index .path.segments 2}}-{{index .path.segments 0}}"
       namespace: argocd
       labels:
         repo: app-infra
-        team: "{{index .path.segments 1}}"
+        team: "{{index .path.segments 2}}"
         environment: "{{index .path.segments 0}}"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
