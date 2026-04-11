@@ -12,7 +12,7 @@ spec:
     config:
       nodeCount: 2
       softwareConfig:
-        imageVersion: composer-3-airflow-3.1.7
+        imageVersion: composer-2.16.10-airflow-2.10.5
   providerConfigRef:
     name: default
     kind: ProviderConfig
