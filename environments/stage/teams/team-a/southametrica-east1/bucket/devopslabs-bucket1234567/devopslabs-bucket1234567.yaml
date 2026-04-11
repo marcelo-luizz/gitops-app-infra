@@ -1,14 +1,14 @@
-apiVersion: storage.gcp.crossplane.io/v1alpha3
-kind: Bucket
-metadata:
-  annotations:
-  labels:
-    example: 'true'
-  name: devopslabs-bucket1234567
-  namespace: crossplane-system
-spec:
-  deletionPolicy: Delete
-  location: US
-  providerConfigRef:
-    name: default
-  storageClass: MULTI_REGIONAL
+# apiVersion: storage.gcp.crossplane.io/v1alpha3
+# kind: Bucket
+# metadata:
+#   annotations:
+#   labels:
+#     example: 'true'
+#   name: devopslabs-bucket1234567
+#   # namespace: crossplane-system
+# spec:
+#   deletionPolicy: Delete
+#   location: US
+#   providerConfigRef:
+#     name: default
+#   storageClass: MULTI_REGIONAL
