@@ -1,17 +1,17 @@
-# apiVersion: composer.gcp.m.upbound.io/v1beta1
-# kind: Environment
-# metadata:
-#   labels:
-#     testing.upbound.io/example-name: composer-environment
-#   name: composer-devopslabs
-#   namespace: crossplane-system
-# spec:
-#   forProvider:
-#     region: southamerica-east1
-#     config:
-#       softwareConfig:
-#         imageVersion: composer-2.16.10-airflow-2.11.1
-#       environmentSize: ENVIRONMENT_SIZE_SMALL
-#   providerConfigRef:
-#     name: default
-#     kind: ProviderConfig
+apiVersion: composer.gcp.m.upbound.io/v1beta1
+kind: Environment
+metadata:
+  labels:
+    testing.upbound.io/example-name: composer-environment
+  name: composer-devopslabs
+  namespace: crossplane-system
+spec:
+  forProvider:
+    region: southamerica-east1
+    config:
+      softwareConfig:
+        imageVersion: composer-2.16.10-airflow-2.11.1
+      environmentSize: ENVIRONMENT_SIZE_SMALL
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
