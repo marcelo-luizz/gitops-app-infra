@@ -16,7 +16,7 @@ spec:
         repoURL: "https://github.com/jeitto/gitops-app-infra.git"
         revision: HEAD
         directories:
-          - path: "environments/*/teams/*"
+          - path: "environments/*"
   template:
     metadata:
       name: "app-{{index .path.segments 3}}-{{index .path.segments 1}}"
