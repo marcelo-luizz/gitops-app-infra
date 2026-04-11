@@ -1,7 +1,7 @@
 apiVersion: sql.gcp.m.upbound.io/v1beta1
 kind: DatabaseInstance
 metadata:
-  name: teste
+  name: teste-novo
   namespace: crossplane-system
 spec:
   forProvider:
@@ -15,4 +15,4 @@ spec:
     name: default
     kind: ProviderConfig
   writeConnectionSecretToRef:
-    name: teste-sql-db-instance-secret
+    name: teste-novo-sql-db-instance-secret
