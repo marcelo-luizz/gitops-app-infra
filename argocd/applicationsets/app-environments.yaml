@@ -13,7 +13,7 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoURL: "https://github.com/jeitto/gitops-app-infra.git"
+        repoURL: "https://github.com/marcelo-luizz/gitops-app-infra.git"
         revision: HEAD
         directories:
           - path: "environments/*"
@@ -30,7 +30,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: "https://github.com/jeitto/gitops-app-infra.git"
+        repoURL: "https://github.com/marcelo-luizz/gitops-app-infra.git"
         targetRevision: HEAD
         path: "{{.path.path}}"
         directory:
