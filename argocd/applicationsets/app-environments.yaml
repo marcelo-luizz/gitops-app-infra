@@ -19,12 +19,12 @@ spec:
           - path: "environments/*"
   template:
     metadata:
-      name: "app-{{index .path.segments 3}}-{{index .path.segments 1}}"
+      name: "app-{{index .path.segments 1}}-{{index .path.segments 0}}"
       namespace: argocd
       labels:
         repo: app-infra
-        team: "{{index .path.segments 3}}"
-        environment: "{{index .path.segments 1}}"
+        team: "{{index .path.segments 1}}"
+        environment: "{{index .path.segments 0}}"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
