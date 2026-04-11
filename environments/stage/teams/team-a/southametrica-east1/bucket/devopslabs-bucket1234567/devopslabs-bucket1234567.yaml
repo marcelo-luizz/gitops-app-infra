@@ -13,3 +13,4 @@ spec:
     storageClass: MULTI_REGIONAL
   providerConfigRef:
     name: default
+    kind: ProviderConfig
