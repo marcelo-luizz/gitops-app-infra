@@ -1,25 +1,25 @@
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: app-infra
-  namespace: argocd
-spec:
-  description: "Application infrastructure Claims — Buckets, PubSub, SAs"
-  sourceRepos:
-    - "https://github.com/jeitto/gitops-app-infra.git"
-  destinations:
-    - namespace: crossplane-system
-      server: https://kubernetes.default.svc
-  clusterResourceWhitelist:
-    # Apenas Claims — times de app não criam Compositions/XRDs
-    - group: "jeitto.io"
-      kind: "BucketClaim"
-    - group: "jeitto.io"
-      kind: "PubSubClaim"
-    - group: "jeitto.io"
-      kind: "ServiceAccountClaim"
-  namespaceResourceWhitelist:
-    - group: "jeitto.io"
-      kind: "*"
-  orphanedResources:
-    warn: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: AppProject
+# metadata:
+#   name: app-infra
+#   namespace: argocd
+# spec:
+#   description: "Application infrastructure Claims — Buckets, PubSub, SAs"
+#   sourceRepos:
+#     - "https://github.com/jeitto/gitops-app-infra.git"
+#   destinations:
+#     - namespace: crossplane-system
+#       server: https://kubernetes.default.svc
+#   clusterResourceWhitelist:
+#     # Apenas Claims — times de app não criam Compositions/XRDs
+#     - group: "jeitto.io"
+#       kind: "BucketClaim"
+#     - group: "jeitto.io"
+#       kind: "PubSubClaim"
+#     - group: "jeitto.io"
+#       kind: "ServiceAccountClaim"
+#   namespaceResourceWhitelist:
+#     - group: "jeitto.io"
+#       kind: "*"
+#   orphanedResources:
+#     warn: true

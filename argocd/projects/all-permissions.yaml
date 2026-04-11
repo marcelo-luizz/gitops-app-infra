@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: app-infra
+  namespace: argocd
+spec:
+  description: "Projeto com permissões totais para infraestrutura"
+  # Permite qualquer repositório Git ou Helm
+  sourceRepos:
+    - "*"
+  # Permite deploy em qualquer cluster e qualquer namespace
+  destinations:
+    - namespace: "*"
+      server: "*"
+  # Libera todos os recursos a nível de Cluster (Nodes, Namespaces, ClusterRoles, etc)
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  # Libera todos os recursos a nível de Namespace (Deployments, Services, ConfigMaps, etc)
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  # Opcional: Habilita o monitoramento de recursos órfãos
+  orphanedResources:
+    warn: true
