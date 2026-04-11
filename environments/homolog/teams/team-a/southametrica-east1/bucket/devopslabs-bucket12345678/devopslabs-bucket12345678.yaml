@@ -1,15 +1,14 @@
-apiVersion: storage.gcp.m.upbound.io/v1beta1
+apiVersion: storage.gcp.crossplane.io/v1alpha3
 kind: Bucket
 metadata:
   annotations:
   labels:
     example: 'true'
-    testing.upbound.io/example-name: bucket-object
   name: devopslabs-bucket12345678
-  namespace: crossplane-system
 spec:
-  forProvider:
-    location: US
-    storageClass: MULTI_REGIONAL
+  deletionPolicy: Delete
+  location: US
   providerConfigRef:
     name: default
+    kind: ProviderConfig
+  storageClass: MULTI_REGIONAL
