@@ -1,18 +1,33 @@
-apiVersion: sql.gcp.m.upbound.io/v1beta1
-kind: DatabaseInstance
-metadata:
-  name: devopslabs-bucket12345
-  namespace: crossplane-system
-spec:
-  forProvider:
-    databaseVersion: MYSQL_5_7
-    deletionProtection: false
-    region: us-central1
-    settings:
-      diskSize: 20
-      tier: db-f1-micro
-  providerConfigRef:
-    name: default
-    kind: ProviderConfig
-  writeConnectionSecretToRef:
-    name: devopslabs-bucket12345-sql-db-instance-secret
+# apiVersion: sql.gcp.m.upbound.io/v1beta1
+# kind: DatabaseInstance
+# metadata:
+#   name: devopslabs-bucket12345
+#   namespace: crossplane-system
+# spec:
+#   forProvider:
+#     databaseVersion: MYSQL_5_7
+#     deletionProtection: false
+#     region: us-central1
+#     settings:
+#       diskSize: 20
+#       tier: db-f1-micro
+#   providerConfigRef:
+#     name: default
+#     kind: ProviderConfig
+#   writeConnectionSecretToRef:
+#     name: devopslabs-bucket12345-sql-db-instance-secret
+
+# apiVersion: storage.gcp.crossplane.io/v1alpha3
+# kind: Bucket
+# metadata:
+#   annotations:
+#   labels:
+#     example: 'true'
+#   name: bucket-devopslabs-bucket12345667
+# spec:
+#   deletionPolicy: Delete
+#   location: US
+#   providerConfigRef:
+#     name: default
+#     kind: ProviderConfig
+#   storageClass: MULTI_REGIONAL
