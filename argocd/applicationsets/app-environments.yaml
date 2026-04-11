@@ -28,7 +28,7 @@ spec:
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
-      project: app-infra
+      project: default
       source:
         repoURL: "https://github.com/jeitto/gitops-app-infra.git"
         targetRevision: HEAD
