@@ -1,0 +1,16 @@
+apiVersion: memorystore.gcp.m.upbound.io/v1beta1
+kind: Instance
+metadata:
+  annotations:
+  labels:
+    testing.upbound.io/example-name: test-instance
+  name: redis-devops1
+  namespace: crossplane-system
+spec:
+  forProvider:
+    deletionProtectionEnabled: false
+    location: southamerica-east1
+    shardCount: 1
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
