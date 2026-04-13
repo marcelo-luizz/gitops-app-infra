@@ -28,8 +28,10 @@ spec:
     topicSelector:
       matchLabels:
         resource-name: devops-topic
-    ackDeadlineSeconds: 20
-    
+    ackDeadlineSeconds: 30
+    messageRetentionDuration: "172800s"
+    expirationPolicy:
+      ttl: "2678400s"
     deadLetterPolicy:
         deadLetterTopicSelector:
           matchLabels:
@@ -71,7 +73,10 @@ spec:
     topicSelector:
       matchLabels:
         resource-name: devops-topic-dlq
-    ackDeadlineSeconds: 20
+    ackDeadlineSeconds: 30
+    messageRetentionDuration: "172800s"
+    expirationPolicy:
+      ttl: "2678400s"
   providerConfigRef:
     name: default
     kind: ProviderConfig
