@@ -11,6 +11,7 @@ spec:
   forProvider: {}
   providerConfigRef:
     name: default
+    kind: ProviderConfig
 
 ---
 # Subscription Principal
@@ -37,7 +38,7 @@ spec:
     
   providerConfigRef:
     name: default
-
+    kind: ProviderConfig
 
 ---
 # Tópico de DLQ
@@ -53,6 +54,7 @@ spec:
   forProvider: {}
   providerConfigRef:
     name: default
+    kind: ProviderConfig
 
 ---
 # Subscription de DLQ (Para drenar as mensagens presas)
@@ -72,6 +74,7 @@ spec:
     ackDeadlineSeconds: 20
   providerConfigRef:
     name: default
+    kind: ProviderConfig
 
 ---
 # Permissão Necessária: PubSub Service Agent -> Publicar na DLQ
@@ -89,3 +92,4 @@ spec:
         resource-name: devops-topic-dlq
   providerConfigRef:
     name: default
+    kind: ProviderConfig
