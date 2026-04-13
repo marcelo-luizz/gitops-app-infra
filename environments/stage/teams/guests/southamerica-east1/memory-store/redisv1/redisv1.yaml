@@ -1,0 +1,23 @@
+apiVersion: redis.gcp.m.upbound.io/v1beta1
+kind: Instance
+metadata:
+  annotations:
+    meta.upbound.io/example-id: redis-instance
+  labels:
+    testing.upbound.io/example-name: redis-instance
+  name: redisv1
+  namespace: crossplane-system
+spec:
+  forProvider:
+    authEnabled: false
+    labels:
+      environment: stage
+      team: guests
+    memorySizeGb: 1
+    region: southamerica-east1
+    tier: BASIC
+  writeConnectionSecretToRef:
+    name: example-redis-instance-secret
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
