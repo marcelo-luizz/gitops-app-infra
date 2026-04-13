@@ -85,11 +85,27 @@ metadata:
 spec:
   forProvider:
     role: roles/pubsub.publisher
-    # Service Agent padrão do PubSub (O número 509332012213 é o do seu projeto atual)
     member: "serviceAccount:service-509332012213@gcp-sa-pubsub.iam.gserviceaccount.com"
     topicSelector:
       matchLabels:
         resource-name: devops-topic-dlq
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
+
+---
+# Isso resolve o erro "Assign Subscriber role"
+apiVersion: pubsub.gcp.m.upbound.io/v1beta1
+kind: SubscriptionIAMMember
+metadata:
+  name: "devops-topic-sub-subscriber-auth"
+spec:
+  forProvider:
+    role: roles/pubsub.subscriber
+    member: "serviceAccount:service-509332012213@gcp-sa-pubsub.iam.gserviceaccount.com"
+    subscriptionSelector:
+      matchLabels:
+        resource-name: devops-topic-subscription
   providerConfigRef:
     name: default
     kind: ProviderConfig
