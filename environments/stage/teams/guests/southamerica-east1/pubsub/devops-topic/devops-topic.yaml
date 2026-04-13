@@ -27,7 +27,7 @@ spec:
   forProvider:
     topicSelector:
       matchLabels:
-        resource-name: devops-topic-topic
+        resource-name: devops-topic
     ackDeadlineSeconds: 20
     
     deadLetterPolicy:
