@@ -31,7 +31,7 @@ spec:
     ackDeadlineSeconds: 20
     
     deadLetterPolicy:
-      - deadLetterTopicSelector:
+        deadLetterTopicSelector:
           matchLabels:
             resource-name: devops-topic-dlq
         maxDeliveryAttempts: 5
