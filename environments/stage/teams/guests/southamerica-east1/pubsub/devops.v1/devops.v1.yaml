@@ -1,0 +1,112 @@
+# Tópico Principal
+apiVersion: pubsub.gcp.m.upbound.io/v1beta1
+kind: Topic
+metadata:
+  name: devops.v1-topic
+  labels:
+    team: guests
+    env: stage
+    resource-name: devops.v1-topic
+spec:
+  forProvider: {}
+  providerConfigRef:
+    name: default
+
+---
+# Subscription Principal
+apiVersion: pubsub.gcp.m.upbound.io/v1beta1
+kind: Subscription
+metadata:
+  name: devops.v1-subscription
+  labels:
+    team: guests
+    env: stage
+    resource-name: devops.v1-subscription
+spec:
+  forProvider:
+    topicSelector:
+      matchLabels:
+        resource-name: devops.v1-topic
+    ackDeadlineSeconds: 30
+    messageRetentionDuration: "172800s"
+    expirationPolicy:
+      ttl: "2678400s"
+    
+    deadLetterPolicy:
+        deadLetterTopicSelector:
+          matchLabels:
+            resource-name: devops.v1-dlq
+        maxDeliveryAttempts: 5
+    
+  providerConfigRef:
+    name: default
+
+
+---
+# Tópico de DLQ
+apiVersion: pubsub.gcp.m.upbound.io/v1beta1
+kind: Topic
+metadata:
+  name: devops.v1-dlq
+  labels:
+    team: guests
+    env: stage
+    resource-name: devops.v1-dlq
+spec:
+  forProvider: {}
+  providerConfigRef:
+    name: default
+
+---
+# Subscription de DLQ (Para drenar as mensagens presas)
+apiVersion: pubsub.gcp.m.upbound.io/v1beta1
+kind: Subscription
+metadata:
+  name: devops.v1-dlq
+  labels:
+    team: guests
+    env: stage
+    resource-name: devops.v1-dlq-subscription
+spec:
+  forProvider:
+    topicSelector:
+      matchLabels:
+        resource-name: devops.v1-dlq
+    ackDeadlineSeconds: 30
+    messageRetentionDuration: "172800s"
+    expirationPolicy:
+      ttl: "2678400s"
+  providerConfigRef:
+    name: default
+
+---
+# Permissão Necessária: PubSub Service Agent -> Publicar na DLQ
+apiVersion: pubsub.gcp.m.upbound.io/v1beta1
+kind: TopicIAMMember
+metadata:
+  name: "devops.v1-dlq-auth"
+spec:
+  forProvider:
+    role: roles/pubsub.publisher
+    member: "serviceAccount:service-509332012213@gcp-sa-pubsub.iam.gserviceaccount.com"
+    topicSelector:
+      matchLabels:
+        resource-name: devops.v1-dlq
+  providerConfigRef:
+    name: default
+---
+# Isso resolve o erro "Assign Subscriber role"
+apiVersion: pubsub.gcp.m.upbound.io/v1beta1
+kind: SubscriptionIAMMember
+metadata:
+  name: "devops.v1-subscriber-auth"
+spec:
+  forProvider:
+    role: roles/pubsub.subscriber
+    member: "serviceAccount:service-509332012213@gcp-sa-pubsub.iam.gserviceaccount.com"
+    subscriptionSelector:
+      matchLabels:
+        resource-name: devops.v1-subscription
+  providerConfigRef:
+    name: default
+    kind: ProviderConfig
